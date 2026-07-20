@@ -44,7 +44,7 @@ $browserDefs = @{
     }
     firefox = @{
         # Firefox speaks Mozilla's policy dialect, not Chromium's. On
-        # Windows SlimBrave Neo writes <install dir>\distribution\
+        # Windows Spiral Slim writes <install dir>\distribution\
         # policies.json — Mozilla's officially supported cross-platform
         # location that handles nested policy values uniformly (the
         # registry mapping for nested policies is a separate ADMX
@@ -385,7 +385,7 @@ if ($appsUseLightTheme) {
 # ---------------------------------------------------------------------------
 
 $form = New-Object System.Windows.Forms.Form
-$form.Text = "SlimBrave Neo - $browserLabel"
+$form.Text = "Spiral Slim - $browserLabel"
 # Segoe UI replaces the WinForms default (8.25pt Microsoft Sans Serif) and
 # is inherited by every control that doesn't set its own font.
 $form.Font = New-Object System.Drawing.Font("Segoe UI", 9)
@@ -772,7 +772,7 @@ $perfFeatures = @(
 # 720p / 768p / 1080p cutoff fix. Taller displays keep the two-column layout.
 #
 # Force a column count for testing on a normal monitor by setting
-# $env:SLIMBRAVE_COLUMNS to "2" or "3" before launching.
+# $env:SPIRALSLIM_COLUMNS to "2" or "3" before launching.
 # ---------------------------------------------------------------------------
 
 # Mozilla Firefox catalog — every key verified against
@@ -901,8 +901,8 @@ foreach ($cat in $categories) { $categoryByName[$cat.Name] = $cat }
 $twoColumnWindowHeight = 1140
 
 $columnCount = 2
-if ($env:SLIMBRAVE_COLUMNS -eq "2" -or $env:SLIMBRAVE_COLUMNS -eq "3") {
-    $columnCount = [int]$env:SLIMBRAVE_COLUMNS
+if ($env:SPIRALSLIM_COLUMNS -eq "2" -or $env:SPIRALSLIM_COLUMNS -eq "3") {
+    $columnCount = [int]$env:SPIRALSLIM_COLUMNS
 } elseif ([System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea.Height -lt $twoColumnWindowHeight) {
     $columnCount = 3
 }
@@ -1158,7 +1158,7 @@ $saveButton.Add_Click({
                 $ffMsg += "`n`n$browserLabel is running. Fully close it before reopening."
             }
             [System.Windows.Forms.MessageBox]::Show(
-                $ffMsg, "SlimBrave Neo",
+                $ffMsg, "Spiral Slim",
                 [System.Windows.Forms.MessageBoxButtons]::OK,
                 [System.Windows.Forms.MessageBoxIcon]::Information
             )
@@ -1263,7 +1263,7 @@ $saveButton.Add_Click({
 
     [System.Windows.Forms.MessageBox]::Show(
         $msg,
-        "SlimBrave Neo",
+        "Spiral Slim",
         [System.Windows.Forms.MessageBoxButtons]::OK,
         [System.Windows.Forms.MessageBoxIcon]::Information
     )
@@ -1276,7 +1276,7 @@ $saveButton.Add_Click({
 function Reset-AllSettings {
     $confirm = [System.Windows.Forms.MessageBox]::Show(
         "Warning: This will erase ALL $browserLabel policy settings and restore them to their default state. Do you wish to continue?",
-        "Confirm SlimBrave Neo Reset",
+        "Confirm Spiral Slim Reset",
         [System.Windows.Forms.MessageBoxButtons]::YesNo,
         [System.Windows.Forms.MessageBoxIcon]::Warning
     )
@@ -1369,7 +1369,7 @@ $resetButton.Add_Click({
 $exportButton.Add_Click({
     $saveFileDialog = New-Object System.Windows.Forms.SaveFileDialog
     $saveFileDialog.Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*"
-    $saveFileDialog.Title = "Export SlimBrave Neo Settings"
+    $saveFileDialog.Title = "Export Spiral Slim Settings"
     $saveFileDialog.InitialDirectory = [Environment]::GetFolderPath("MyDocuments")
     $saveFileDialog.FileName = "SlimBraveNeoSettings.json"
 
@@ -1427,7 +1427,7 @@ $exportButton.Add_Click({
 $importButton.Add_Click({
     $openFileDialog = New-Object System.Windows.Forms.OpenFileDialog
     $openFileDialog.Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*"
-    $openFileDialog.Title = "Import SlimBrave Neo Settings"
+    $openFileDialog.Title = "Import Spiral Slim Settings"
     $openFileDialog.InitialDirectory = [Environment]::GetFolderPath("MyDocuments")
 
     if ($openFileDialog.ShowDialog() -eq [System.Windows.Forms.DialogResult]::OK) {
@@ -1437,7 +1437,7 @@ $importButton.Add_Click({
             $declared = "$($importedSettings.Browser)".ToLower()
             if ($declared -and $declared -ne $Browser) {
                 [System.Windows.Forms.MessageBox]::Show(
-                    "This config targets '$declared' but SlimBrave Neo is managing '$Browser'.`nRelaunch with:  .\SlimBrave.ps1 -Browser $declared",
+                    "This config targets '$declared' but Spiral Slim is managing '$Browser'.`nRelaunch with:  .\SpiralSlim.ps1 -Browser $declared",
                     "Wrong Browser",
                     [System.Windows.Forms.MessageBoxButtons]::OK,
                     [System.Windows.Forms.MessageBoxIcon]::Warning

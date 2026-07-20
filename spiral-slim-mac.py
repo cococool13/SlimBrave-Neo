@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""SlimBrave Neo - Linux and macOS TUI for debloating and hardening Brave Browser.
+"""Spiral Slim - Linux and macOS TUI for debloating and hardening Brave Browser.
 
 Sets Chromium enterprise policies via JSON files on Linux or Plist on macOS. Requires root (sudo).
 
@@ -14,11 +14,11 @@ Multi-channel support:
     user-data directory and to detect running channels.
 
 Supports interactive curses TUI and non-interactive CLI usage:
-  sudo python3 slimbrave.py                              # TUI
-  sudo python3 slimbrave.py --import preset.json         # CLI import
-  sudo python3 slimbrave.py --export out.json            # CLI export
-  sudo python3 slimbrave.py --reset                      # CLI reset
-  sudo python3 slimbrave.py --channels stable,beta ...   # restrict (macOS)
+  sudo python3 spiral-slim.py                              # TUI
+  sudo python3 spiral-slim.py --import preset.json         # CLI import
+  sudo python3 spiral-slim.py --export out.json            # CLI export
+  sudo python3 spiral-slim.py --reset                      # CLI reset
+  sudo python3 spiral-slim.py --channels stable,beta ...   # restrict (macOS)
 """
 
 import argparse
@@ -54,7 +54,7 @@ if IS_MAC:
     # Configuration Profile (mode=on) — single mobileconfig wraps every
     # selected channel's policies; one PayloadContent entry per channel.
     PERSIST_PROFILE_IDENTIFIER = "io.github.slimbrave-neo.brave-policy"
-    PERSIST_PROFILE_DISPLAY = "SlimBrave Neo - Brave Policy"
+    PERSIST_PROFILE_DISPLAY = "Spiral Slim - Brave Policy"
     PERSIST_PROFILE_FILE = "/tmp/slimbrave-neo-policy.mobileconfig"
 else:
     POLICY_DIR = "/etc/brave/policies/managed"
@@ -204,7 +204,7 @@ BROWSERS = {
         "linux_policy_dir": "/etc/brave/policies/managed",
         "prefs_repair": True,
         "profile_identifier": "io.github.slimbrave-neo.brave-policy",
-        "profile_display": "SlimBrave Neo - Brave Policy",
+        "profile_display": "Spiral Slim - Brave Policy",
     },
     "chrome": {
         "label": "Google Chrome",
@@ -215,7 +215,7 @@ BROWSERS = {
         "linux_policy_dir": "/etc/opt/chrome/policies/managed",
         "prefs_repair": False,
         "profile_identifier": "io.github.slimbrave-neo.chrome-policy",
-        "profile_display": "SlimBrave Neo - Google Chrome Policy",
+        "profile_display": "Spiral Slim - Google Chrome Policy",
     },
     "edge": {
         "label": "Microsoft Edge",
@@ -226,7 +226,7 @@ BROWSERS = {
         "linux_policy_dir": None,
         "prefs_repair": False,
         "profile_identifier": "io.github.slimbrave-neo.edge-policy",
-        "profile_display": "SlimBrave Neo - Microsoft Edge Policy",
+        "profile_display": "Spiral Slim - Microsoft Edge Policy",
     },
     "firefox": {
         "label": "Mozilla Firefox",
@@ -238,7 +238,7 @@ BROWSERS = {
         "linux_policy_file": "policies.json",
         "prefs_repair": False,
         "profile_identifier": "io.github.slimbrave-neo.firefox-policy",
-        "profile_display": "SlimBrave Neo - Mozilla Firefox Policy",
+        "profile_display": "Spiral Slim - Mozilla Firefox Policy",
     },
 }
 
@@ -632,7 +632,7 @@ def detect_brave():
 
 
 # ---------------------------------------------------------------------------
-# Feature definitions - mirrors the Windows SlimBrave Neo PS1 categories
+# Feature definitions - mirrors the Windows Spiral Slim PS1 categories
 # ---------------------------------------------------------------------------
 
 # Features with a `group` key are mutually exclusive within that group:
@@ -1130,7 +1130,7 @@ def _stable_uuid(slug):
 
 
 def _is_profile_installed():
-    """True if the SlimBrave Neo Configuration Profile is in the system db.
+    """True if the Spiral Slim Configuration Profile is in the system db.
 
     Reads `profiles list -output stdout-xml` (a plist mapping a domain
     label to an array of profile dicts) and scans for our identifier.
@@ -1196,17 +1196,17 @@ def _build_mobileconfig(policy_by_bundle):
         "PayloadUUID": _stable_uuid(PERSIST_PROFILE_IDENTIFIER),
         "PayloadDisplayName": PERSIST_PROFILE_DISPLAY,
         "PayloadDescription": (
-            f"{browser_label()} enterprise policies managed by SlimBrave Neo. "
-            "Remove via SlimBrave Neo --reset or in System Settings."
+            f"{browser_label()} enterprise policies managed by Spiral Slim. "
+            "Remove via Spiral Slim --reset or in System Settings."
         ),
-        "PayloadOrganization": "SlimBrave Neo",
+        "PayloadOrganization": "Spiral Slim",
         "PayloadScope": "System",
         "PayloadContent": inner_payloads,
     }
 
 
 def _remove_profile():
-    """Remove the SlimBrave Neo profile via the `profiles` CLI.
+    """Remove the Spiral Slim profile via the `profiles` CLI.
 
     `profiles remove -identifier ... -forced` is the root-only path that
     still works without a GUI on macOS 11+. Silent when nothing to remove.
@@ -1704,7 +1704,7 @@ def sync_rows_with_policy(rows, policy):
 def detect_persist_mode():
     """Detect whether persistence is currently in use on this Mac.
 
-    Returns "on" if the SlimBrave Neo Configuration Profile is in the
+    Returns "on" if the Spiral Slim Configuration Profile is in the
     system db, otherwise "off". Non-macOS always returns "off".
     """
     if not IS_MAC:
@@ -1717,7 +1717,7 @@ def detect_persist_mode():
 
 
 def export_settings(rows, path):
-    """Export current TUI selections to a SlimBrave Neo JSON config file.
+    """Export current TUI selections to a Spiral Slim JSON config file.
 
     Writes the new key-value map format so multi-value policies (e.g.
     IncognitoModeAvailability, which can be 1 for Disable or 2 for Force)
@@ -1773,7 +1773,7 @@ def _parse_imported_features(features_obj):
 
 
 def import_settings(rows, path):
-    """Import a SlimBrave Neo JSON config and update TUI row states."""
+    """Import a Spiral Slim JSON config and update TUI row states."""
     try:
         config = read_json_file(path)
     except FileNotFoundError:
@@ -1886,9 +1886,9 @@ def draw(stdscr, rows, cursor_idx, scroll_offset, focus, btn_idx,
 
     # Title bar
     if install_method:
-        title = f" SlimBrave Neo - {browser_label()} Debloater [{install_method}] "
+        title = f" Spiral Slim - {browser_label()} Debloater [{install_method}] "
     else:
-        title = f" SlimBrave Neo - {browser_label()} Debloater "
+        title = f" Spiral Slim - {browser_label()} Debloater "
     pad = max(0, (usable_w - len(title)) // 2)
     try:
         stdscr.addnstr(0, 0, " " * usable_w, usable_w,
@@ -2639,8 +2639,8 @@ def cli_reset(installations):
 def parse_args():
     """Parse command-line arguments."""
     parser = argparse.ArgumentParser(
-        prog="slimbrave",
-        description="SlimBrave Neo - Brave Browser debloater for Linux and macOS",
+        prog="spiral-slim",
+        description="Spiral Slim - Brave Browser debloater for Linux and macOS",
         epilog="Run without arguments to launch the interactive TUI.",
     )
     parser.add_argument(
@@ -2650,15 +2650,15 @@ def parse_args():
     )
     parser.add_argument(
         "--import", dest="import_path", metavar="PATH",
-        help="import a SlimBrave Neo JSON config and apply policies",
+        help="import a Spiral Slim JSON config and apply policies",
     )
     parser.add_argument(
         "--export", dest="export_path", metavar="PATH",
-        help="export current policy to a SlimBrave Neo JSON config",
+        help="export current policy to a Spiral Slim JSON config",
     )
     parser.add_argument(
         "--reset", action="store_true",
-        help="remove the SlimBrave Neo managed policy file",
+        help="remove the Spiral Slim managed policy file",
     )
     parser.add_argument(
         "--policy-file", metavar="PATH",
@@ -2726,11 +2726,11 @@ if __name__ == "__main__":
     is_cli = args.import_path or args.export_path or args.reset
 
     if os.geteuid() != 0:
-        print("SlimBrave Neo must be run as root.")
+        print("Spiral Slim must be run as root.")
         if is_cli:
-            print("Usage: sudo python3 slimbrave.py --import preset.json")
+            print("Usage: sudo python3 spiral-slim.py --import preset.json")
         else:
-            print("Usage: sudo python3 slimbrave.py")
+            print("Usage: sudo python3 spiral-slim.py")
         sys.exit(1)
 
     if is_cli:

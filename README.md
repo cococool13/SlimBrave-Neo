@@ -1,8 +1,8 @@
 <div align="center">
 
-# SlimBrave Neo
+# Spiral Slim
 
-<img src="https://github.com/user-attachments/assets/3e90a996-a74a-4ca1-bea6-0869275bab58" width="160" height="240">
+*Part of the Spiral collection.*
 
 **Debloat and harden Brave, Google Chrome, Microsoft Edge, and Mozilla Firefox on Linux, macOS, and Windows.**
 
@@ -13,29 +13,32 @@
 [![macOS](https://img.shields.io/badge/macOS-Supported-000000?logo=apple&logoColor=white)]()
 [![Windows](https://img.shields.io/badge/Windows-Supported-0078D6?logo=windows&logoColor=white)]()
 
-SlimBrave Neo uses enterprise managed policies to disable telemetry, bloat, and unwanted features in Brave Browser — and in Google Chrome, Microsoft Edge, and Mozilla Firefox too. No browser extensions, no hacks, just clean policy enforcement the browsers respect natively. Brave stays the default; pass `--browser chrome` / `--browser edge` / `--browser firefox` (or `-Browser` on Windows) to manage the others. The Chromium browsers share one policy dialect; Firefox speaks Mozilla's own (`policies.json` / managed preferences) and gets its own fully separate, schema-verified catalog. Edge is supported on Windows and macOS only: Microsoft's policy documentation doesn't cover Edge on Linux, so there is nothing authoritative to audit a Linux Edge catalog against.
+Spiral Slim uses enterprise managed policies to disable telemetry, bloat, and unwanted features in Brave Browser — and in Google Chrome, Microsoft Edge, and Mozilla Firefox too. No browser extensions, no hacks, just clean policy enforcement the browsers respect natively. Brave stays the default; pass `--browser chrome` / `--browser edge` / `--browser firefox` (or `-Browser` on Windows) to manage the others. The Chromium browsers share one policy dialect; Firefox speaks Mozilla's own (`policies.json` / managed preferences) and gets its own fully separate, schema-verified catalog. Edge is supported on Windows and macOS only: Microsoft's policy documentation doesn't cover Edge on Linux, so there is nothing authoritative to audit a Linux Edge catalog against.
 
 </div>
 
 > [!IMPORTANT]
-> **The only official source of SlimBrave Neo is this repository:**
-> [`github.com/ChaoticSi1ence/SlimBrave-Neo`](https://github.com/ChaoticSi1ence/SlimBrave-Neo)
+> **The only official source of Spiral Slim is this repository:**
+> [`github.com/cococool13/Spiral-Slim`](https://github.com/cococool13/Spiral-Slim)
 >
 > This project ships **source code only**. Python and PowerShell scripts you can read before running.
 > **There are no official `.exe`, `.msi`, `.dmg`, `.pkg`, installers, or compiled binaries.**
-> If you find a download claiming to be SlimBrave-Neo elsewhere, it is not from this project. See [`SECURITY.md`](SECURITY.md).
+> If you find a download claiming to be Spiral Slim elsewhere, it is not from this project. See [`SECURITY.md`](SECURITY.md).
+
+> [!NOTE]
+> **Lineage & credit.** Spiral Slim began as a fork of [Spiral Slim](https://github.com/ChaoticSi1ence/SlimBrave-Neo) by ChaoticSi1ence and remains GPL-3.0. The multi-browser engine, per-browser catalogs, and preset system were developed here and offered upstream. For migration compatibility with SlimBrave installs, some on-disk identifiers deliberately keep their original names (the `slimbrave.json` policy filename and the macOS profile identifiers) — renaming them would leave migrating users with duplicate policy files that Chromium merges, and orphaned Configuration Profiles this tool could no longer remove.
 
 > [!NOTE]
 > **Linux users: consider [Brave Origin](https://brave.com/origin/linux/nightly/) first.**
 > Brave Origin is a free, official Brave variant that ships with telemetry and bloat already removed. If you just want a clean Brave without configuration, that's the simpler path.
 >
-> The Linux version of SlimBrave Neo is still fully supported, and is the right tool if you want fine-grained control over individual policies, custom presets, or your own DoH templates beyond what Origin provides out of the box.
+> The Linux version of Spiral Slim is still fully supported, and is the right tool if you want fine-grained control over individual policies, custom presets, or your own DoH templates beyond what Origin provides out of the box.
 
 <div align="center">
 
 ---
 
-<img src="assets/tui-screenshot.png" width="620" alt="SlimBrave Neo Linux TUI">
+<img src="assets/tui-screenshot.png" width="620" alt="Spiral Slim Linux TUI">
 
 *Interactive curses TUI with the Maximum Privacy preset imported. Zero dependencies, runs in any terminal.*
 
@@ -48,9 +51,9 @@ SlimBrave Neo uses enterprise managed policies to disable telemetry, bloat, and 
 ### Linux
 
 ```bash
-git clone https://github.com/ChaoticSi1ence/SlimBrave-Neo.git
-cd SlimBrave-Neo
-sudo python3 slimbrave-linux.py
+git clone https://github.com/cococool13/Spiral-Slim.git
+cd Spiral-Slim
+sudo python3 spiral-slim-linux.py
 ```
 
 That's it. No `pip install`, no `jq`, no external dependencies. Just Python 3 and root.
@@ -58,14 +61,14 @@ That's it. No `pip install`, no `jq`, no external dependencies. Just Python 3 an
 **CLI mode (non-interactive):**
 
 ```bash
-sudo python3 slimbrave-linux.py --import "./Presets/Brave/Maximum Privacy Preset.json"
-sudo python3 slimbrave-linux.py --export ~/SlimBraveNeoSettings.json
-sudo python3 slimbrave-linux.py --reset
+sudo python3 spiral-slim-linux.py --import "./Presets/Brave/Maximum Privacy Preset.json"
+sudo python3 spiral-slim-linux.py --export ~/SpiralSlimSettings.json
+sudo python3 spiral-slim-linux.py --reset
 
 # Manage Google Chrome or Mozilla Firefox instead of Brave:
-sudo python3 slimbrave-linux.py --browser chrome
-sudo python3 slimbrave-linux.py --browser chrome --import "./Presets/Chrome/Maximum Privacy Preset.json"
-sudo python3 slimbrave-linux.py --browser firefox --import "./Presets/Firefox/Debloat Preset.json"
+sudo python3 spiral-slim-linux.py --browser chrome
+sudo python3 spiral-slim-linux.py --browser chrome --import "./Presets/Chrome/Maximum Privacy Preset.json"
+sudo python3 spiral-slim-linux.py --browser firefox --import "./Presets/Firefox/Debloat Preset.json"
 ```
 
 **Multiple Brave channels (Stable / Beta / Nightly):** Brave hardcodes the managed-policy directory to `/etc/brave/policies` for every channel, so a single policy file applies to all of them — no per-channel selector is needed. If multiple channels are installed, leaked Shields exceptions are scrubbed from each channel's user-data directory and "Brave is running" detection covers all installed channels.
@@ -75,14 +78,14 @@ After applying, restart Brave and verify at `brave://policy`.
 ### macOS
 
 ```bash
-git clone https://github.com/ChaoticSi1ence/SlimBrave-Neo.git
-cd SlimBrave-Neo
-sudo python3 slimbrave-mac.py
+git clone https://github.com/cococool13/Spiral-Slim.git
+cd Spiral-Slim
+sudo python3 spiral-slim-mac.py
 ```
 
 Requires root. Policies are written to `/Library/Managed Preferences/com.brave.Browser.plist` by default; with `--persist on` an Apple Configuration Profile is installed instead.
 
-**Persistence on macOS (Apple Silicon / macOS 13+).** On modern macOS, `cfprefsd` and `mdmclient` may clear directly-written `/Library/Managed Preferences/*.plist` files at reboot when no Configuration Profile backs them, so policies don't always survive a restart. SlimBrave Neo offers two modes:
+**Persistence on macOS (Apple Silicon / macOS 13+).** On modern macOS, `cfprefsd` and `mdmclient` may clear directly-written `/Library/Managed Preferences/*.plist` files at reboot when no Configuration Profile backs them, so policies don't always survive a restart. Spiral Slim offers two modes:
 
 | Mode | What it does | Persists | User action |
 |------|--------------|----------|-------------|
@@ -91,29 +94,29 @@ Requires root. Policies are written to `/Library/Managed Preferences/com.brave.B
 
 When `--persist` is omitted on the CLI, the mode currently installed on the Mac is reused, so a re-run never silently demotes an installed profile back to plist-only. A fresh install defaults to `off`.
 
-When you click Apply in the TUI, SlimBrave Neo asks two macOS-only questions in order: which Brave channels to manage (only when more than one is installed), then whether to persist across reboots. Both prompts have a sticky default — Enter keeps whichever scope and mode are currently installed.
+When you click Apply in the TUI, Spiral Slim asks two macOS-only questions in order: which Brave channels to manage (only when more than one is installed), then whether to persist across reboots. Both prompts have a sticky default — Enter keeps whichever scope and mode are currently installed.
 
 ```bash
-sudo python3 slimbrave-mac.py --import "./Presets/Brave/Maximum Privacy Preset.json" --persist on
-sudo python3 slimbrave-mac.py --import "./Presets/Brave/Maximum Privacy Preset.json" --persist off
-sudo python3 slimbrave-mac.py --reset
+sudo python3 spiral-slim-mac.py --import "./Presets/Brave/Maximum Privacy Preset.json" --persist on
+sudo python3 spiral-slim-mac.py --import "./Presets/Brave/Maximum Privacy Preset.json" --persist off
+sudo python3 spiral-slim-mac.py --reset
 
 # Manage Chrome, Edge, or Firefox instead of Brave:
-sudo python3 slimbrave-mac.py --browser chrome
-sudo python3 slimbrave-mac.py --browser edge --import "./Presets/Edge/Debloat Preset.json"
-sudo python3 slimbrave-mac.py --browser firefox --import "./Presets/Firefox/Maximum Privacy Preset.json"
+sudo python3 spiral-slim-mac.py --browser chrome
+sudo python3 spiral-slim-mac.py --browser edge --import "./Presets/Edge/Debloat Preset.json"
+sudo python3 spiral-slim-mac.py --browser firefox --import "./Presets/Firefox/Maximum Privacy Preset.json"
 ```
 
-**Finishing the Configuration Profile install (macOS 26).** With `--persist on`, SlimBrave Neo writes a `.mobileconfig` and opens System Settings, but macOS 11+ disallows CLI-driven profile installs so you finish the step in the GUI: a "Profile Downloaded" notification appears; in System Settings click **General** → **Device Management**, scroll down to **Downloaded**, double-click **SlimBrave Neo - Brave Policy**, click **Install**, and enter your login password. Policies then take effect immediately and persist across reboots. To uninstall, run `--reset` or remove the profile under the same Device Management pane. Reference: [Apple — Install configuration profiles on Mac](https://support.apple.com/guide/mac-help/mh35561/mac).
+**Finishing the Configuration Profile install (macOS 26).** With `--persist on`, Spiral Slim writes a `.mobileconfig` and opens System Settings, but macOS 11+ disallows CLI-driven profile installs so you finish the step in the GUI: a "Profile Downloaded" notification appears; in System Settings click **General** → **Device Management**, scroll down to **Downloaded**, double-click **Spiral Slim - Brave Policy**, click **Install**, and enter your login password. Policies then take effect immediately and persist across reboots. To uninstall, run `--reset` or remove the profile under the same Device Management pane. Reference: [Apple — Install configuration profiles on Mac](https://support.apple.com/guide/mac-help/mh35561/mac).
 
 **CLI mode (non-interactive):**
 
 ```bash
-sudo python3 slimbrave-mac.py --import "./Presets/Brave/Maximum Privacy Preset.json"
-sudo python3 slimbrave-mac.py --export ~/SlimBraveNeoSettings.json
-sudo python3 slimbrave-mac.py --reset
-sudo python3 slimbrave-mac.py --import preset.json --channels stable,beta
-sudo python3 slimbrave-mac.py --import preset.json --persist on
+sudo python3 spiral-slim-mac.py --import "./Presets/Brave/Maximum Privacy Preset.json"
+sudo python3 spiral-slim-mac.py --export ~/SpiralSlimSettings.json
+sudo python3 spiral-slim-mac.py --reset
+sudo python3 spiral-slim-mac.py --import preset.json --channels stable,beta
+sudo python3 spiral-slim-mac.py --import preset.json --persist on
 ```
 
 After applying, restart Brave and verify at `brave://policy`.
@@ -121,15 +124,15 @@ After applying, restart Brave and verify at `brave://policy`.
 ### Windows
 
 ```powershell
-iwr "https://raw.githubusercontent.com/ChaoticSi1ence/SlimBrave-Neo/main/SlimBrave.ps1" -OutFile "SlimBrave.ps1"; .\SlimBrave.ps1
+iwr "https://raw.githubusercontent.com/cococool13/Spiral-Slim/main/SpiralSlim.ps1" -OutFile "SpiralSlim.ps1"; .\SpiralSlim.ps1
 ```
 
 To manage Google Chrome or Microsoft Edge instead of Brave:
 
 ```powershell
-.\SlimBrave.ps1 -Browser chrome
-.\SlimBrave.ps1 -Browser edge
-.\SlimBrave.ps1 -Browser firefox
+.\SpiralSlim.ps1 -Browser chrome
+.\SpiralSlim.ps1 -Browser edge
+.\SpiralSlim.ps1 -Browser firefox
 ```
 
 Requires Administrator privileges. Hover over any option in the app for a plain-English description of what it does and the exact policy it writes. The app follows your Windows light/dark theme, and on low-resolution displays (e.g. 720p/768p) automatically reflows from two columns into three shorter ones so no options or buttons run off the bottom of the screen.
@@ -257,8 +260,8 @@ Pin Brave's own protection defaults as managed policy so they can't be weakened 
 | Flag | Description |
 |------|-------------|
 | `--browser NAME` | Which browser to manage: `brave` (default), `chrome`, `edge` (macOS/Windows only), or `firefox`. Windows uses `-Browser NAME`. |
-| `--import PATH` | Import a SlimBrave Neo JSON config and apply policies (the config's `Browser` field must match the selected browser) |
-| `--export PATH` | Export current policy to a SlimBrave Neo JSON config |
+| `--import PATH` | Import a Spiral Slim JSON config and apply policies (the config's `Browser` field must match the selected browser) |
+| `--export PATH` | Export current policy to a Spiral Slim JSON config |
 | `--reset` | Remove the managed policy file |
 | `--policy-file PATH` | Override policy file path |
 | `--doh-templates URL` | Set custom DNS-over-HTTPS template URL |
@@ -321,7 +324,7 @@ Presets live in per-browser folders — `Presets/Brave/`, `Presets/Chrome/`, `Pr
 
 ## How It Works
 
-SlimBrave Neo writes Chromium [managed enterprise policies](https://chromeenterprise.google/policies/) to platform-specific locations. Brave reads these on startup and enforces the policies. No browser modifications needed.
+Spiral Slim writes Chromium [managed enterprise policies](https://chromeenterprise.google/policies/) to platform-specific locations. Brave reads these on startup and enforces the policies. No browser modifications needed.
 
 | Platform | Browser | Policy Location |
 |----------|---------|----------------|

@@ -1,4 +1,4 @@
-"""Unit tests for the pure logic shared by slimbrave-linux.py and slimbrave-mac.py.
+"""Unit tests for the pure logic shared by spiral-slim-linux.py and spiral-slim-mac.py.
 
 Both scripts are loaded as modules (their entry points are guarded by
 __main__) and every test runs against each, so a fix applied to one file
@@ -26,8 +26,8 @@ def _load(alias, filename):
 
 
 MODULES = [
-    _load("slimbrave_linux", "slimbrave-linux.py"),
-    _load("slimbrave_mac", "slimbrave-mac.py"),
+    _load("slimbrave_linux", "spiral-slim-linux.py"),
+    _load("slimbrave_mac", "spiral-slim-mac.py"),
 ]
 
 

@@ -1,6 +1,6 @@
 # Policy Audit — June 2026
 
-Verification of every policy key SlimBrave Neo manages, against the two
+Verification of every policy key Spiral Slim manages, against the two
 authoritative sources:
 
 - **Brave-specific keys:** [brave-core policy definitions](https://github.com/brave/brave-core/tree/master/components/policy/resources/templates/policy_definitions/BraveSoftware) (per-policy YAML: `deprecated`, `supported_on`, schema)
@@ -39,7 +39,7 @@ authoritative sources:
 | DefaultBraveReferrersSetting | ✅ active | cr142 | int enum | 1 = permissive, 2 = cap to strict origin; both values exposed as mutually exclusive toggles (issue #9); never put value 1 in a preset |
 | DefaultBraveRemember1PStorageSetting | ✅ active | cr142 | int enum | 1 = remember, 2 = forget on close; **newly exposed** |
 | BraveSyncUrl | ✅ active | cr129 | string | **deliberately not exposed** — it's a custom-sync-server URL, not a debloat toggle; use a hand-written policy file if you self-host sync |
-| IPFSEnabled | ⛔ `deprecated: true` | — | bool | IPFS feature removed from Brave 1.69.153 (Aug 2024); not exposed by SlimBrave Neo. **Do not re-add** — this key has bounced in/out of this project before; the brave-core YAML is the tiebreaker |
+| IPFSEnabled | ⛔ `deprecated: true` | — | bool | IPFS feature removed from Brave 1.69.153 (Aug 2024); not exposed by Spiral Slim. **Do not re-add** — this key has bounced in/out of this project before; the brave-core YAML is the tiebreaker |
 
 ## Chromium-inherited keys
 
@@ -148,7 +148,7 @@ Write locations: Linux `/etc/firefox/policies/policies.json` (content wrapped in
 ## Cross-cutting checks
 
 - **Windows registry path** — `HKLM:\SOFTWARE\Policies\BraveSoftware\Brave` confirmed correct against Brave's official Group Policy documentation (`BraveSoftware\Brave-Browser` is the *install* dir name, not the policy path).
-- **`ForUrls` wildcard patterns** — Brave's docs say "wildcards are not supported", meaning patterns like `*.example.com`. The scheme-wide patterns SlimBrave uses (`https://*`, `http://*`) are valid ContentSettingsPattern syntax and demonstrably work: Brave materializes them into profile `braveShields` exceptions (which is exactly the pref leak the repair logic in all three scripts scrubs).
+- **`ForUrls` wildcard patterns** — Brave's docs say "wildcards are not supported", meaning patterns like `*.example.com`. The scheme-wide patterns Spiral Slim uses (`https://*`, `http://*`) are valid ContentSettingsPattern syntax and demonstrably work: Brave materializes them into profile `braveShields` exceptions (which is exactly the pref leak the repair logic in all three scripts scrubs).
 - **Version gating** — several keys only act on newer Brave: 1.82 (News/Talk/Speedreader/Wayback), 1.83 (P3A/StatsPing/WebDiscovery, FingerprintingV2), 1.84 (Playlist, the other `DefaultBrave*` enforcers), ~1.89 (EmailAliases). Older Brave silently ignores unknown keys — harmless, but the toggle won't do anything until the browser updates.
 
 ## Re-audit procedure

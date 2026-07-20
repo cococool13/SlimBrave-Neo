@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""SlimBrave Neo - Linux TUI for debloating and hardening Brave Browser.
+"""Spiral Slim - Linux TUI for debloating and hardening Brave Browser.
 
 Sets Chromium enterprise policies via JSON files at
 /etc/brave/policies/managed/slimbrave.json. Requires root.
@@ -12,10 +12,10 @@ Multi-channel handling on Linux:
   to detect which Brave processes are currently running.
 
 Supports interactive curses TUI and non-interactive CLI usage:
-  sudo python3 slimbrave.py                        # TUI
-  sudo python3 slimbrave.py --import preset.json   # CLI import
-  sudo python3 slimbrave.py --export out.json      # CLI export
-  sudo python3 slimbrave.py --reset                # CLI reset
+  sudo python3 spiral-slim.py                        # TUI
+  sudo python3 spiral-slim.py --import preset.json   # CLI import
+  sudo python3 spiral-slim.py --export out.json      # CLI export
+  sudo python3 spiral-slim.py --reset                # CLI reset
 """
 
 import argparse
@@ -419,7 +419,7 @@ def detect_brave():
 
 
 # ---------------------------------------------------------------------------
-# Feature definitions - mirrors the Windows SlimBrave Neo PS1 categories
+# Feature definitions - mirrors the Windows Spiral Slim PS1 categories
 # ---------------------------------------------------------------------------
 
 # Features with a `group` key are mutually exclusive within that group:
@@ -1104,7 +1104,7 @@ def sync_rows_with_policy(rows, policy):
 
 
 def export_settings(rows, path):
-    """Export current TUI selections to a SlimBrave Neo JSON config file."""
+    """Export current TUI selections to a Spiral Slim JSON config file."""
     features = {}
     dns_mode = None
     dns_template = ""
@@ -1148,7 +1148,7 @@ def _parse_imported_features(features_obj):
 
 
 def import_settings(rows, path):
-    """Import a SlimBrave Neo JSON config and update TUI row states."""
+    """Import a Spiral Slim JSON config and update TUI row states."""
     try:
         config = read_json_file(path)
     except FileNotFoundError:
@@ -1253,9 +1253,9 @@ def draw(stdscr, rows, cursor_idx, scroll_offset, focus, btn_idx,
     usable_w = max_x - 1
 
     if install_method:
-        title = f" SlimBrave Neo - {browser_label()} Debloater [{install_method}] "
+        title = f" Spiral Slim - {browser_label()} Debloater [{install_method}] "
     else:
-        title = f" SlimBrave Neo - {browser_label()} Debloater "
+        title = f" Spiral Slim - {browser_label()} Debloater "
     pad = max(0, (usable_w - len(title)) // 2)
     try:
         stdscr.addnstr(0, 0, " " * usable_w, usable_w,
@@ -1780,8 +1780,8 @@ def _filter_installations_by_channels(installations, channel_spec):
 def parse_args():
     """Parse command-line arguments."""
     parser = argparse.ArgumentParser(
-        prog="slimbrave",
-        description="SlimBrave Neo - Brave Browser debloater",
+        prog="spiral-slim",
+        description="Spiral Slim - Brave Browser debloater",
         epilog="Run without arguments to launch the interactive TUI.",
     )
     parser.add_argument(
@@ -1790,15 +1790,15 @@ def parse_args():
     )
     parser.add_argument(
         "--import", dest="import_path", metavar="PATH",
-        help="import a SlimBrave Neo JSON config and apply policies",
+        help="import a Spiral Slim JSON config and apply policies",
     )
     parser.add_argument(
         "--export", dest="export_path", metavar="PATH",
-        help="export current policy to a SlimBrave Neo JSON config",
+        help="export current policy to a Spiral Slim JSON config",
     )
     parser.add_argument(
         "--reset", action="store_true",
-        help="remove the SlimBrave Neo managed policy file",
+        help="remove the Spiral Slim managed policy file",
     )
     parser.add_argument(
         "--policy-file", metavar="PATH",
@@ -1849,11 +1849,11 @@ if __name__ == "__main__":
     is_cli = args.import_path or args.export_path or args.reset
 
     if os.geteuid() != 0:
-        print("SlimBrave Neo must be run as root.")
+        print("Spiral Slim must be run as root.")
         if is_cli:
-            print("Usage: sudo python3 slimbrave.py --import preset.json")
+            print("Usage: sudo python3 spiral-slim.py --import preset.json")
         else:
-            print("Usage: sudo python3 slimbrave.py")
+            print("Usage: sudo python3 spiral-slim.py")
         sys.exit(1)
 
     if is_cli:
